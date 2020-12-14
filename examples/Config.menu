@@ -1,0 +1,2 @@
+config BUILD_EXAMPLE
+    bool "Build Example"

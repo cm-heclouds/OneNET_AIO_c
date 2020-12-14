@@ -1,0 +1,23 @@
+inc-y := 
+inc-y += platforms/include
+inc-y += common
+inc-y += security
+inc-y += tools/cJSON
+inc-y += tools/wolfssl/port tools/wolfssl/wolfssl-3.15.3
+inc-sub-y += tools/wolfssl/wolfssl-3.15.3/wolfssl
+inc-$(CONFIG_TM_MQTT) += protocols/mqtt
+inc-$(CONFIG_IOT_MQTT) += protocols/mqtt
+inc-$(CONFIG_IOT_MQTTS) += protocols/mqtt
+inc-$(CONFIG_TM_COAP) += protocols/coap/er-coap-13
+inc-y += onenet/utils
+inc-$(CONFIG_TM) += onenet/tm
+inc-$(CONFIG_IOT) += onenet/iot
+inc-$(CONFIG_IOT_EDP) += onenet/iot/edp
+inc-$(CONFIG_IOT_MQTT) += onenet/iot/mqtt
+inc-$(CONFIG_IOT_MQTTS) += onenet/iot/mqtts
+inc-$(CONFIG_IOT_NBIOT) += onenet/iot/nbiot
+inc-$(CONFIG_IOT_NBIOT) += tools/modadptr
+
+inc-$(CONFIG_GENERAL_OTA) += services/ota/core
+inc-$(CONFIG_GENERAL_OTA) += services/ota/core/http
+inc-$(CONFIG_GENERAL_OTA) += services/ota/adapter

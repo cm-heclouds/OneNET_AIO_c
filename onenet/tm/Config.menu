@@ -1,0 +1,17 @@
+choice
+    prompt "Access Protocol"
+    config TM_MQTT
+        bool "MQTT"
+    config TM_COAP
+        bool "CoAP"
+endchoice
+config TM_GATEWAY
+    depends on TM_MQTT
+    bool "Gateway API for ThingModel"
+config TM_VERSION
+    string "ThingsModel Protocol Ver."
+    default "1.0"
+
+config TM_REPLY_TIMEOUT
+    int "Reply Timeout(In ms)"
+    default 1000

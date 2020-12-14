@@ -1,0 +1,28 @@
+mainmenu "OneNET SDK All-In-One"
+
+source "platforms/Config.menu"
+source "common/Config.menu"
+source "onenet/Config.menu"
+source "security/Config.menu"
+source "services/Config.menu"
+menu "Build Options"
+config BUILD_EXAMPLE
+    bool "Build Example"
+config CROSS_COMPILER
+    string "Cross Compiler"
+choice
+    prompt "Language Standard"
+    default LANG_STD_C99
+    config LANG_STD_C89
+        bool "C89"
+    config LANG_STD_C99
+        bool "C99"
+endchoice
+config C_FLAGS
+    string "C FLAGS"
+config LD_FLAGS
+    string "LD FLAGS"
+config LINK_LIBS
+    string "Link Libs"
+    depends on BUILD_EXAMPLE
+endmenu

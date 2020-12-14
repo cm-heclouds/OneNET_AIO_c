@@ -1,0 +1,61 @@
+menu "Access Setting"
+
+choice
+    prompt "Access Method"
+    default TM
+    config IOT
+        bool "PaaS Common"
+    config TM
+        bool "Things Model"
+        select USE_ACCESS_TOKEN
+endchoice
+
+if IOT
+source "onenet/iot/Config.menu"
+endif
+
+if TM
+source "onenet/tm/Config.menu"
+endif
+
+choice
+    prompt "Access Token Signature Method"
+    depends on USE_ACCESS_TOKEN
+    default ACCESS_TOKEN_METHOD_SHA1
+    config ACCESS_TOKEN_METHOD_MD5
+        bool "MD5"
+    config ACCESS_TOKEN_METHOD_SHA1
+        bool "SHA1"
+    config ACCESS_TOKEN_METHOD_SHA256
+        bool "SHA256"
+endchoice
+
+config USE_ACCESS_TOKEN
+    bool
+    depends on IOT_MQTTS || TM
+
+config USE_ONENET_PAYLOAD
+    bool
+    depends on IOT_EDP || IOT_MQTT
+
+config ACCESS_LIFE_TIME
+    int "Life Time"
+    depends on TM
+    default 3600 if TM_COAP
+    default 30
+
+menu "Buffer Setting"
+    if !IOT_EDP
+        config PACKET_PAYLOAD_LEN_MAX
+            int "Payload Length"
+            default 128
+    endif
+    config SEND_BUF_LEN_MAX
+        int "Send Buffer Length"
+        default 256
+    config RECV_BUF_LEN_MAX
+        int "Receive Buffer Length"
+        default 256
+endmenu
+
+endmenu

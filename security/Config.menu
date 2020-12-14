@@ -1,0 +1,13 @@
+menu "Security"
+    config NETWORK_TLS
+        depends on IOT_MQTTS || TM_MQTT
+        bool "Network with TLS"
+        default y
+    choice
+        prompt "TLS Library"
+        depends on NETWORK_TLS
+        default NETWORK_TLS_WOLFSSL
+        config NETWORK_TLS_WOLFSSL
+            bool "WolfSSL"
+    endchoice
+endmenu
