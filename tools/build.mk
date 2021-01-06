@@ -1,5 +1,4 @@
-obj-$(CONFIG_NETWORK_TLS_WOLFSSL) += wolfssl/
-obj-$(CONFIG_USE_ACCESS_TOKEN) += wolfssl/
-obj-$(CONFIG_TM) += cJSON/
-obj-$(CONFIG_IOT_MQTTS) += cJSON/
-obj-$(CONFIG_IOT_NBIOT) += modadptr/
+obj-$(CONFIG_CJSON) += cJSON/
+obj-$(CONFIG_WOLFSSL_CRYPTO) += wolfssl/
+oBJ-$(CONFIG_WOLFSSL_TLS) += wolfssl/
+obj-$(CONFIG_MOD_ADAPTOR) += modadptr/

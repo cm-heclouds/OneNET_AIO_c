@@ -9,7 +9,7 @@ obj-y :=
 obj-y := $(sort $(obj-y))
 
 # List Sub-dirs
-sub-dirs := $(strip $(patsubst %/, %, $(filter %/, $(obj-y))))
+sub_dirs := $(strip $(patsubst %/, %, $(filter %/, $(obj-y))))
 export-srcs := $(strip $(patsubst %.o, %.c, $(filter %.o, $(obj-y))))
 
 export-srcs : $(EXPORT_SRCS_DIR)
@@ -20,9 +20,9 @@ export-srcs : $(EXPORT_SRCS_DIR)
 		done;								\
 	fi
 
-	@if [ -n "$(sub-dirs)" ];				\
+	@if [ -n "$(sub_dirs)" ];				\
 	then									\
-		for sub in $(sub-dirs);				\
+		for sub in $(sub_dirs);				\
 		do $(MAKE) -C $$sub -f $(TOP_DIR)/build/rules/rules_export.mk;	\
 		done;								\
 	fi

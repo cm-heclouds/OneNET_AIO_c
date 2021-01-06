@@ -27,8 +27,8 @@
 //#define CN_DEVICE_ID_EDP      "n3xcq=2tR2ZsBCqMw=l=sYPERNY="       
 
 /** 产品ID + 鉴权信息（auth_info）*/  
-#define CN_PRODUCT_ID_EDP     "387750"  
-#define CN_DEVICE_ID_EDP      "testKey001"       
+#define CN_PRODUCT_ID_EDP       
+#define CN_DEVICE_ID_EDP             
 
 /*****************************************************************************/
 /* Structures, Enum and Typedefs                                             */

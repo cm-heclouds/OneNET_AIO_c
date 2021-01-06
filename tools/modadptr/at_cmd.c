@@ -175,7 +175,7 @@ int32_t at_send_cmd_with_reply(const int8_t *cmd, const int8_t *expect_code, int
         ret = at_parse_line(cmd, expect_code, reply_data, reply_len, cd_hdl);
         if(ret == ERR_REQUEST_FAILED)
         {
-            osl_sleep_ms(50);
+            time_delay_ms(50);
         }
     }
 

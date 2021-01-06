@@ -7,7 +7,8 @@ choice
         bool "PaaS Common"
     config TM
         bool "Things Model"
-        select USE_ACCESS_TOKEN
+        select ACCESS_TOKEN
+        select CJSON
 endchoice
 
 if IOT
@@ -20,7 +21,7 @@ endif
 
 choice
     prompt "Access Token Signature Method"
-    depends on USE_ACCESS_TOKEN
+    depends on ACCESS_TOKEN
     default ACCESS_TOKEN_METHOD_SHA1
     config ACCESS_TOKEN_METHOD_MD5
         bool "MD5"
@@ -30,13 +31,15 @@ choice
         bool "SHA256"
 endchoice
 
-config USE_ACCESS_TOKEN
+config ACCESS_TOKEN
     bool
     depends on IOT_MQTTS || TM
+    select CJSON
+    select WOLFSSL_CRYPTO
 
-config USE_ONENET_PAYLOAD
+config ONENET_PAYLOAD
     bool
-    depends on IOT_EDP || IOT_MQTT
+    default n
 
 config ACCESS_LIFE_TIME
     int "Life Time"

@@ -496,30 +496,41 @@ int32_t tm_set_subdev_callback(tm_subdev_cb callback)
 
 int32_t tm_login(const int8_t *product_id, const int8_t *dev_name, const int8_t *access_key, uint32_t timeout_ms)
 {
+    int32_t ret = ERR_OK;
     int8_t dev_token[256] = {0};
     uint32_t topic_prefix_len = osl_strlen(TM_TOPIC_PREFIX) + osl_strlen(product_id) + osl_strlen(dev_name);
-
-    if(g_tm_obj.topic_prefix)
-    {
-        osl_free(g_tm_obj.topic_prefix);
-    }
-
-    g_tm_obj.topic_prefix = osl_malloc(topic_prefix_len);
-    if(NULL == g_tm_obj.topic_prefix)
-    {
-        return ERR_NO_MEM;
-    }
-    osl_memset(g_tm_obj.topic_prefix, 0, topic_prefix_len);
-    osl_sprintf(g_tm_obj.topic_prefix, TM_TOPIC_PREFIX, product_id, dev_name);
 
     dev_token_generate(dev_token, SIG_METHOD_SHA1, 2524579200, product_id, dev_name, access_key);
     log_debug("token = %s\n", dev_token);
 
 #if defined(CONFIG_TM_MQTT)
-    return tm_mqtt_login(product_id, dev_name, dev_token, CONFIG_ACCESS_LIFE_TIME, timeout_ms);
+    ret = tm_mqtt_login(product_id, dev_name, dev_token, CONFIG_ACCESS_LIFE_TIME, timeout_ms);
 #elif defined(CONFIG_TM_COAP)
-    return tm_coap_login(product_id, dev_name, dev_token, CONFIG_ACCESS_LIFE_TIME, timeout_ms);
+    ret = tm_coap_login(product_id, dev_name, dev_token, CONFIG_ACCESS_LIFE_TIME, timeout_ms);
 #endif
+
+    if(ERR_OK == ret)
+    {
+        if(g_tm_obj.topic_prefix)
+        {
+            osl_free(g_tm_obj.topic_prefix);
+        }
+
+        g_tm_obj.topic_prefix = osl_malloc(topic_prefix_len);
+        if(NULL == g_tm_obj.topic_prefix)
+        {
+#if defined(CONFIG_TM_MQTT)
+            tm_mqtt_logout(timeout_ms);
+#elif defined(CONFIG_TM_COAP)
+            tm_coap_logout(timeout_ms);
+#endif
+            return ERR_NO_MEM;
+        }
+        osl_memset(g_tm_obj.topic_prefix, 0, topic_prefix_len);
+        osl_sprintf(g_tm_obj.topic_prefix, TM_TOPIC_PREFIX, product_id, dev_name);
+    }
+
+    return ret;
 }
 
 int32_t tm_logout(uint32_t timeout_ms)

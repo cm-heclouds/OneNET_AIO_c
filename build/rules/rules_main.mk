@@ -8,55 +8,52 @@ endif
 target := $(OBJ_DIR)/built-in.o
 obj-y :=
 
--include $(CONFIG_FILE)
--include $(CUR_DIR)/build.mk
+sinclude $(CONFIG_FILE)
+sinclude $(CUR_DIR)/build.mk
 
 ifneq (build.mk, $(wildcard build.mk))
 obj-y += $(patsubst %.c, %.o, $(wildcard *.c))
 # $(info "obj-y :  $(obj-y)")
 endif
 
-# contains Objs(Like *.o or path/*.o) and Sub-dirs(Like path/)
+# contains Objs(Like *.o or path/*.o) and Sub_dirs(Like path/)
 obj-y := $(sort $(obj-y))
 
 # List Sub-dirs
-sub-dirs := $(strip $(patsubst %/, %, $(filter %/, $(obj-y))))
+sub_dirs := $(strip $(patsubst %/, %, $(filter %/, $(obj-y))))
 
-# List Objs needed: sub-dir-path/built-in.o, *.o and path/*.o
-obj-files := 
-ifneq ($(sub-dirs), )
-	obj-files += $(foreach n, $(sub-dirs), $(OBJ_DIR)/$(n)/built-in.o)
-endif
-obj-files += $(patsubst %.o, $(OBJ_DIR)/%.o, $(notdir $(filter %.o, $(obj-y))))
-obj-files := $(strip $(obj-files))
+src_files := $(patsubst %.o, %.c, $(filter %.o, $(obj-y)))
+obj-files := $(patsubst %,$(OBJ_DIR)/%/built-in.o,$(sub_dirs)) $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(src_files)))
 
-# List Objs(*.o) which build from the src in current dir
-objs_in_cur := $(filter $(notdir $(filter %.o, $(obj-y))), $(filter %.o, $(obj-y)))
-# List Objs(path/*.o) which build from the src in sub-dir
-objs_in_sub := $(filter-out $(objs_in_cur), $(filter %.o, $(obj-y)))
+build-objs: $(target)
 
-build-objs: $(OBJ_DIR) $(target)
-$(target) : $(obj-files)
+sinclude $(patsubst %.c, $(OBJ_DIR)/%.d, $(notdir $(src_files)))
+
+
+$(target): $(obj-files) 
 	$(LD) -r $^ -o $@
 
-$(OBJ_DIR):
-	@mkdir -p $@
-
-$(filter %/built-in.o, $(obj-files)): $(OBJ_DIR)/%/built-in.o: % PHONY
+ifneq ($(sub_dirs), )
+$(patsubst %, $(OBJ_DIR)/%/built-in.o, $(sub_dirs)) : $(OBJ_DIR)/%/built-in.o : % PHONY
+	@mkdir -p $(OBJ_DIR)/$<
 	$(MAKE) -f $(TOP_DIR)/build/rules/rules_main.mk -C $<
-
-ifneq ($(objs_in_cur), )
-$(patsubst %, $(OBJ_DIR)/%, $(objs_in_cur)): $(OBJ_DIR)/%.o : $(CUR_DIR)/%.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 endif
 
-ifneq ($(objs_in_sub), )
-define rule_of_objs_in_sub
-$(OBJ_DIR)/$(notdir $(1)): $(CUR_DIR)/$(strip $(patsubst %.o, %.c, $(1)))
+
+ifneq ($(src_files),)
+define build_src_file
+$(OBJ_DIR)/$(patsubst %.c,%.o,$(notdir $(1))) : $(CUR_DIR)/$(1)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $$< -o $$@
+
+$(OBJ_DIR)/$(patsubst %.c,%.d,$(notdir $(1))) : $(CUR_DIR)/$(1)
+	@set -e;rm -f $$@;\
+	$(CC) -MM $(CFLAGS) $(INCLUDES) $$< > $$@.$$$$$$$$;\
+	sed 's,\($$*\)\.o[ :],\1.o $$@ :,g;1 s,^,$(OBJ_DIR)/,g' < $$@.$$$$$$$$ > $$@;\
+	rm -f $$@.$$$$$$$$
+
 endef
 
-$(foreach n, $(objs_in_sub), $(eval $(call rule_of_objs_in_sub,$(n))))
+$(foreach n, $(src_files), $(eval $(call build_src_file,$(n))))
 endif
 
 .PHONY : PHONY

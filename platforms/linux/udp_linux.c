@@ -10,7 +10,6 @@
 /*****************************************************************************/
 #include "plat_time.h"
 #include "plat_udp.h"
-#include "plat_task.h"
 #include "log.h"
 
 #include <string.h>
@@ -76,8 +75,8 @@ handle_t udp_connect(const char *host, uint16_t port)
         osl_assert(udp_packet_list != NULL);
         slist_init(udp_packet_list);
     }
-    osl_task_handle_t udp_recv_handle = 0;
-    task_create(&udp_recv_handle, NULL, udp_recv_thread, (void *)((long)fd));
+    pthread_t udp_recv_handle = 0;
+    pthread_create(&udp_recv_handle, NULL, udp_recv_thread, (void *)((long)fd));
 
     return (handle_t)fd;
 
@@ -153,7 +152,7 @@ int32_t udp_recv(handle_t handle, void *buf, uint32_t len, uint32_t timeout_ms)
         struct slist_node *node = slist_get_head(udp_packet_list);
         if(node == NULL)
         {
-            osl_sleep_ms(100);
+            time_delay_ms(100);
             continue;
         }
         else
@@ -185,7 +184,7 @@ int32_t udp_disconnect(handle_t handle)
     udp_close_flag = 2;
     while(udp_close_flag != 0)
     {
-        osl_sleep_ms(50);
+        time_delay_ms(50);
         if(countdown_is_expired(countdown_tmr) == 1)
         {
             break;

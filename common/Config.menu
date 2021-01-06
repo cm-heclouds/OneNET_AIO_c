@@ -16,6 +16,6 @@ menu "Common"
         endchoice
         config DEBUG_LOG_BUF_LEN_MAX
             int "Debug Log Buffer Length"
-            default 256
+            default 128
     endif
 endmenu

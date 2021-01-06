@@ -21,7 +21,7 @@
 /* Local Definitions ( Constant and Macro )                                  */
 /*****************************************************************************/
 /** 心跳时间*/
-#define CN_LIFE_TIME_NBIOT      120 
+#define CN_LIFE_TIME_NBIOT      3600 
 /*****************************************************************************/
 /* Structures, Enum and Typedefs                                             */
 /*****************************************************************************/
@@ -183,13 +183,18 @@ int main(int arg, char *argv[])
 
     /** 初始化配置信息*/
     nbiot_config.life_time = CN_LIFE_TIME_NBIOT;
+#if 0 /** 根据实际情况配置设备信息*/
+    nbiot_config.product_id = "123";
+    nbiot_config.device_sn = "test_dev";
+    nbiot_config.auth_code = "auth";
+#endif
 
     /** 打开设备*/
     iot_dev_ptr = iot_dev_open(IOT_PROTO_NBIOT, &nbiot_config, &nbiot_cb_func, 60000);
 
     if(!iot_dev_ptr)
     {
-        goto exit;
+        return 0;
     }
 
     /** 订阅资源*/

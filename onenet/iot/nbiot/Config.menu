@@ -4,6 +4,11 @@ config IOT_NBIOT_OBJECTS_MAX_CNT
 config IOT_NBIOT_RESOURCES_MAX_CNT_PER_OBJECT
     int "Resources Max Count Per Object"
     range 1 16
-config IOT_NBIOT_M5311
-    bool "Use M5311"
-    default n
+
+if MOD_ADAPTOR
+source "tools/modadptr/Config.menu"
+endif
+
+#config IOT_NBIOT_M5311
+#    bool "Use M5311"
+#    default n

@@ -48,9 +48,8 @@ int32_t osl_strncmp(const int8_t *s1, const int8_t *s2, size_t n);
 int8_t *osl_strstr(const int8_t *s1, const int8_t *s2);
 int32_t osl_sprintf(int8_t *str, const int8_t *format, ...);
 int32_t osl_sscanf(const int8_t *str, const int8_t *format, ...);
-void osl_assert(bool expression);
+void osl_assert(boolean expression);
 void *osl_malloc_with_zero(size_t size);
-void osl_sleep_ms(uint32_t ms);
 int32_t osl_get_random(unsigned char* buf, size_t len);
 
 #ifdef __cplusplus

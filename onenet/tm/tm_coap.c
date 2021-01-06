@@ -26,7 +26,8 @@
 
 #define COAP_LIFETIME_LIMIT_S (600)
 
-#define THING_MODEL_COAP_SERVER_ADDR "183.230.102.116"
+#define THING_MODEL_COAP_SERVER_ADDR "10.12.31.100" // test
+// #define THING_MODEL_COAP_SERVER_ADDR "183.230.102.116"
 #define THING_MODEL_COAP_SERVER_PORT 5683
 /*****************************************************************************/
 /* Structures, Enum and Typedefs                                             */

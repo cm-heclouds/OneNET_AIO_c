@@ -5,6 +5,7 @@ source "common/Config.menu"
 source "onenet/Config.menu"
 source "security/Config.menu"
 source "services/Config.menu"
+source "tools/Config.menu"
 menu "Build Options"
 config BUILD_EXAMPLE
     bool "Build Example"

@@ -1,5 +1,5 @@
 menu "Services"
     config GENERAL_OTA
         bool "General-OTA by http"
-        default y
+        default n
 endmenu

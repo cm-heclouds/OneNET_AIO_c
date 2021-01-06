@@ -1,0 +1,8 @@
+choice
+    prompt "Select Module"
+    default MOD_ADAPTOR_M5311 if IOT_NBIOT
+    if IOT_NBIOT
+    config MOD_ADAPTOR_M5311
+        bool "CMIOT M5311"
+    endif
+endchoice

@@ -128,7 +128,7 @@ int32_t osl_sscanf(const int8_t *str, const int8_t *format, ...)
     return ret;
 }
 
-void osl_assert(bool expression)
+void osl_assert(boolean expression)
 {
     assert(expression);
 }
@@ -141,14 +141,6 @@ void *osl_malloc_with_zero(size_t size)
         osl_memset(ptr, 0, size);
     }
     return ptr;
-}
-
-void osl_sleep_ms(uint32_t ms)
-{
-    struct timespec request = {0, 0};
-    request.tv_sec          = ms / 1000;
-    request.tv_nsec         = (ms % 1000) * 1000000;
-    nanosleep(&request, NULL);
 }
 
 int32_t osl_get_random(unsigned char* buf, size_t len)

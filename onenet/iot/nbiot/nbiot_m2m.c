@@ -16,7 +16,7 @@
 #include "config.h"
 #include "log.h"
 
-#ifdef CONFIG_IOT_NBIOT_M5311
+#ifdef CONFIG_MOD_ADAPTOR_M5311
 #include "m5311.h"
 #endif
 
@@ -81,7 +81,7 @@ void *m2m_init(void *arg, struct network_param_t *net, m2m_event_cb callback, ui
     }
     osl_memset(m2m_ptr, 0, sizeof(struct m2m_t));
 
-#ifdef CONFIG_IOT_NBIOT_M5311
+#ifdef CONFIG_MOD_ADAPTOR_M5311
     if(ERR_OK != (ret = m5311_init(arg, callback, timeout_ms)))
     {
         log_error("m5311_init error, ret = %d\r\n", ret);
@@ -117,7 +117,7 @@ void *m2m_init(void *arg, struct network_param_t *net, m2m_event_cb callback, ui
 int32_t m2m_deinit(void *arg, uint32_t timeout_ms)
 {
     struct m2m_t *m2m_ptr = (struct m2m_t *)arg;
-#ifdef CONFIG_IOT_NBIOT_M5311
+#ifdef CONFIG_MOD_ADAPTOR_M5311
     m5311_deinit();
 #endif
 
@@ -137,7 +137,7 @@ int32_t m2m_register(void *arg, int8_t *auth_code, uint32_t life_time, uint32_t 
     int8_t res_list[CONFIG_IOT_NBIOT_RESOURCES_MAX_CNT_PER_OBJECT * 5] = {0};
     struct m2m_t *m2m_ptr = (struct m2m_t *)arg;
 
-#ifdef CONFIG_IOT_NBIOT_M5311
+#ifdef CONFIG_MOD_ADAPTOR_M5311
     int8_t host[64] = {0};
     osl_sprintf(host, "%s:%d", m2m_ptr->net.remote_addr, m2m_ptr->net.remote_port);
     m5311_mipl_create((const int8_t *)host, life_time, auth_code, m2m_ptr->net.cert_buf.psk, 1, timeout_ms);
@@ -171,7 +171,7 @@ int32_t m2m_register(void *arg, int8_t *auth_code, uint32_t life_time, uint32_t 
 
 int32_t m2m_update(uint32_t life_time, uint32_t timeout_ms)
 {
-#ifdef CONFIG_IOT_NBIOT_M5311
+#ifdef CONFIG_MOD_ADAPTOR_M5311
     m5311_mipl_update(life_time, 0, timeout_ms);
 #endif
 }
@@ -181,7 +181,7 @@ int32_t m2m_deregister(void *arg, uint32_t timeout_ms)
     uint32_t i = 0;
     struct m2m_t *m2m_ptr = (struct m2m_t *)arg;
 
-#ifdef CONFIG_IOT_NBIOT_M5311
+#ifdef CONFIG_MOD_ADAPTOR_M5311
     for (i = 0; i < CONFIG_IOT_NBIOT_OBJECTS_MAX_CNT; i++)
     {
         if (-1 != m2m_ptr->obj_list[i].obj_id)
@@ -292,21 +292,21 @@ int32_t m2m_del_res(void *arg, struct m2m_res_info_t *res_info)
 int32_t m2m_notify_with_reply(uint32_t msg_id, struct m2m_data_t *data, uint8_t *reply, uint32_t *reply_len,
                               uint32_t timeout_ms)
 {
-#ifdef CONFIG_IOT_NBIOT_M5311
+#ifdef CONFIG_MOD_ADAPTOR_M5311
     m5311_mipl_notify_with_reply(msg_id, data, timeout_ms);
 #endif
 }
 
 int32_t m2m_notify_without_reply(uint32_t msg_id, struct m2m_data_t *data, uint32_t timeout_ms)
 {
-#ifdef CONFIG_IOT_NBIOT_M5311
+#ifdef CONFIG_MOD_ADAPTOR_M5311
     m5311_mipl_notify_without_reply(msg_id, data, timeout_ms);
 #endif
 }
 
 int32_t m2m_read_reply(uint32_t msg_id, uint32_t result_code, struct m2m_data_t *data, uint32_t timeout_ms)
 {
-#ifdef CONFIG_IOT_NBIOT_M5311
+#ifdef CONFIG_MOD_ADAPTOR_M5311
     switch (data->data_type)
     {
         case IOT_DATA_TYPE_STRING:
@@ -330,14 +330,14 @@ int32_t m2m_read_reply(uint32_t msg_id, uint32_t result_code, struct m2m_data_t 
 
 int32_t m2m_write_reply(uint32_t msg_id, uint32_t result_code, uint32_t timeout_ms)
 {
-#ifdef CONFIG_IOT_NBIOT_M5311
+#ifdef CONFIG_MOD_ADAPTOR_M5311
     m5311_mipl_write_resp(msg_id, result_code,  timeout_ms);
 #endif
 }
 
 int32_t m2m_step(uint32_t timeout_ms)
 {
-#ifdef CONFIG_IOT_NBIOT_M5311
+#ifdef CONFIG_MOD_ADAPTOR_M5311
     m5311_mipl_step(timeout_ms);
 #endif
 }

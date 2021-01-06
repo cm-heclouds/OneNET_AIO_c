@@ -24,13 +24,13 @@
 #define CN_LIFE_TIME_MQTT      120 
 
 /** OneNET平台产品ID*/  
-#define CN_PRODUCT_ID_MQTT     "386018"  
+#define CN_PRODUCT_ID_MQTT       
 
 /** 设备ID*/
-#define CN_DEVICE_ID_MQTT      "651078733"       
+#define CN_DEVICE_ID_MQTT             
 
 /** 设备的鉴权信息*/
-#define CN_DEVICE_KEY_MQTT     "test001"
+#define CN_DEVICE_KEY_MQTT     
 
 /*****************************************************************************/
 /* Structures, Enum and Typedefs                                             */
@@ -96,8 +96,8 @@ int main(int arg, char *argv[])
     }
     else
     {
-        log_debug("mqtt iot dev open failed, err_code:%d", (int32_t)iot_dev_ptr);
-        goto exit;
+        log_debug("mqtt iot dev open failed");
+        return 0;
     }
 
     /** 初始化上传的数据*/

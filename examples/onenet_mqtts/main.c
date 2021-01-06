@@ -22,13 +22,13 @@
 #define CN_LIFE_TIME_MQTTS      120 
 
 /** OneNET平台产品ID*/  
-#define CN_PRODUCT_ID_MQTTS     "260398"  
+#define CN_PRODUCT_ID_MQTTS       
 
 /** 设备唯一识别码，产品内唯一*/
-#define CN_DEVICE_NAME_MQTTS    "gateway_001"       
+#define CN_DEVICE_NAME_MQTTS           
 
 /** 认证信息--设备key*/
-#define CN_ACCESS_KEY_MQTTS     "bl1U7V5f7pU1O3teH71YlMefAbBFTYNAo6Cl0v210o8="
+#define CN_ACCESS_KEY_MQTTS     
 
 /*****************************************************************************/
 /* Structures, Enum and Typedefs                                             */
@@ -104,7 +104,7 @@ int main(int arg, char *argv[])
     }
     else
     {
-        log_debug("mqtts iot dev open failed, err_code:%d", (int32_t)iot_dev_ptr);
+        log_debug("mqtts iot dev open failed");
         goto exit;
     }
 
