@@ -1,0 +1,9 @@
+config MQTT
+	bool
+	default n
+config HTTP
+	bool
+	default n
+config COAP
+	bool
+	default n

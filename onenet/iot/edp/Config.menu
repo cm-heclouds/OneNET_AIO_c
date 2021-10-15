@@ -1,0 +1,2 @@
+config IOT_EDP_SAVE_ACK
+        bool "EDP Notify With Ack"

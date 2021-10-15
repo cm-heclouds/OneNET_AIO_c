@@ -1,0 +1,15 @@
+config CJSON
+    bool
+    default n
+
+config WOLFSSL_CRYPTO
+    bool
+    default n
+
+config WOLFSSL_TLS
+    bool
+    default n
+
+config MOD_ADAPTOR
+    bool
+    default n

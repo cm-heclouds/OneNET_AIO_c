@@ -1,0 +1,1 @@
+obj-$(CONFIG_GENERAL_OTA) += ota/

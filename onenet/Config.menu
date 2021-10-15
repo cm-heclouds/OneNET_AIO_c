@@ -1,0 +1,67 @@
+menu "Access Setting"
+
+config ACCESS_ENABLED
+    bool "Enable Access Setting"
+    default y
+
+if ACCESS_ENABLED
+
+choice
+    prompt "Access Method"
+    default TM
+    config IOT
+        bool "PaaS Common"
+    config TM
+        bool "Things Model"
+        select ACCESS_TOKEN
+        select CJSON
+    config RINGA
+        bool "RingaLive"
+        select MQTT
+endchoice
+
+if IOT
+source "onenet/iot/Config.menu"
+endif
+
+if TM
+source "onenet/tm/Config.menu"
+endif
+
+if RINGA
+source "onenet/ringa/Config.menu"
+endif
+
+
+if TM || RINGA
+config DEFAULT_REQUEST_TIMEOUT
+    int "Default Request Timeout(In ms)"
+    default 1000
+
+config ACCESS_LIFE_TIME
+    int "Life Time"
+    default 3600 if TM_COAP
+    default 60
+endif
+
+menu "Buffer Setting"
+    if !IOT_EDP
+        config PACKET_PAYLOAD_LEN_MAX
+            int "Payload Length"
+            default 128
+    endif
+    config SEND_BUF_LEN_MAX
+        int "Send Buffer Length"
+        default 256
+    config RECV_BUF_LEN_MAX
+        int "Receive Buffer Length"
+        default 256
+endmenu
+
+endif
+
+if !IOT_NBIOT || !RINGA || (!RINGA && GENERAL_OTA)
+source "onenet/utils/Config.menu"
+endif
+
+endmenu

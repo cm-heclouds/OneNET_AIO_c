@@ -1,0 +1,26 @@
+choice
+    prompt "Access Protocol"
+    config TM_MQTT
+        bool "MQTT"
+        select MQTT
+    config TM_COAP
+        bool "CoAP"
+        select COAP
+endchoice
+if TM_MQTT
+config TM_MQTT_TLS
+    bool "Enable TLS"
+    default y
+    select NETWORK_TLS
+config TM_GATEWAY
+    bool "Gateway API for ThingModel"
+    default n
+endif
+config TM_FMS
+    bool "File Management Service"
+    select ACCESS_TOKEN
+    select HTTP
+config TM_VERSION
+    string "ThingsModel Protocol Ver."
+    default "1.0"
+    

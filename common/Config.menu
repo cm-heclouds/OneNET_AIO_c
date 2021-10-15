@@ -1,0 +1,18 @@
+menu "Common"
+    config DEBUG_LOG
+        bool "Enable Debug Log"
+    if DEBUG_LOG
+        choice
+            prompt "Debug Log Output Level"
+            default DEBUG_LOG_LEVEL_DEBUG
+            config DEBUG_LOG_LEVEL_DEBUG
+                bool "DEBUG"
+            config DEBUG_LOG_LEVEL_INFO
+                bool "INFO"
+            config DEBUG_LOG_LEVEL_WARNING
+                bool "WARNING"
+            config DEBUG_LOG_LEVEL_ERROR
+                bool "ERROR"
+        endchoice
+    endif
+endmenu

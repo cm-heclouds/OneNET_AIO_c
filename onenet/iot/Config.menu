@@ -1,0 +1,29 @@
+choice
+    prompt "Access Protocol"
+    config IOT_EDP
+        bool "EDP"
+        select ONENET_PAYLOAD
+    config IOT_MQTT
+        bool "MQTT"
+        select MQTT
+        select ONENET_PAYLOAD
+    config IOT_MQTTS
+        bool "MQTTs"
+        select MQTT
+        select ACCESS_TOKEN
+    config IOT_NBIOT
+        bool "NB-Iot"
+        select MOD_ADAPTOR
+endchoice
+
+if IOT_EDP
+    source "onenet/iot/edp/Config.menu"
+endif
+
+if IOT_MQTTS
+    source "onenet/iot/mqtts/Config.menu"
+endif
+
+if IOT_NBIOT
+    source "onenet/iot/nbiot/Config.menu"
+endif

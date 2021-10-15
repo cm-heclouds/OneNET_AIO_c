@@ -1,0 +1,26 @@
+mainmenu "OneNET SDK All-In-One"
+
+source "platforms/Config.menu"
+source "common/Config.menu"
+source "onenet/Config.menu"
+source "protocols/Config.menu"
+source "security/Config.menu"
+source "services/Config.menu"
+source "tools/Config.menu"
+
+menu "Build Options"
+config BUILD_EXAMPLE
+    bool "Build Example"
+config CROSS_COMPILER
+    string "Cross Compiler"
+config HAVE_STDINT
+    bool "Have <stdint.h>"
+    default y
+config C_FLAGS
+    string "C FLAGS"
+config LD_FLAGS
+    string "LD FLAGS"
+config LINK_LIBS
+    string "Link Libs"
+    depends on BUILD_EXAMPLE
+endmenu

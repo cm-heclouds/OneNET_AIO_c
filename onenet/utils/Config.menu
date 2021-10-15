@@ -1,0 +1,22 @@
+config ACCESS_TOKEN
+    bool
+    select CJSON
+    select WOLFSSL_CRYPTO
+
+if ACCESS_TOKEN
+choice
+    prompt "Access Token Signature Method"
+    depends on ACCESS_TOKEN
+    default ACCESS_TOKEN_METHOD_SHA1
+    config ACCESS_TOKEN_METHOD_MD5
+        bool "MD5"
+    config ACCESS_TOKEN_METHOD_SHA1
+        bool "SHA1"
+    config ACCESS_TOKEN_METHOD_SHA256
+        bool "SHA256"
+endchoice
+endif
+
+config ONENET_PAYLOAD
+    bool
+    default n

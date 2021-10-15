@@ -1,0 +1,15 @@
+menu "Platforms"
+    choice
+        prompt "Target Platform"
+        config PLAT_LINUX
+            bool "Linux"
+    endchoice
+
+    choice
+        prompt "Target Platform Arch"
+        config PLAT_ARCH_32BIT
+            bool "32 Bit"
+        config PLAT_ARCH_64BIT
+            bool "64 Bit"
+    endchoice
+endmenu

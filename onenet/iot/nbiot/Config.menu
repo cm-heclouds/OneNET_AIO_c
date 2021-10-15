@@ -1,0 +1,10 @@
+config IOT_NBIOT_OBJECTS_MAX_CNT
+    int "Objects Max Count"
+    range 1 16
+config IOT_NBIOT_RESOURCES_MAX_CNT_PER_OBJECT
+    int "Resources Max Count Per Object"
+    range 1 16
+
+if MOD_ADAPTOR
+source "tools/modadptr/Config.menu"
+endif

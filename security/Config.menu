@@ -1,0 +1,7 @@
+menu "Security"
+    config NETWORK_TLS
+        bool
+    if NETWORK_TLS
+    source "security/tls/Config.menu"
+    endif
+endmenu

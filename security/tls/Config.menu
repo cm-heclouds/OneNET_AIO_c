@@ -1,0 +1,7 @@
+choice
+    prompt "TLS Library"
+    default NETWORK_TLS_WOLFSSL
+    config NETWORK_TLS_WOLFSSL
+        bool "WolfSSL"
+        select WOLFSSL_TLS
+endchoice

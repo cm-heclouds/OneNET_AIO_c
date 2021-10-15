@@ -1,0 +1,6 @@
+choice
+    prompt "Select Module"
+    default MOD_ADAPTOR_M5311
+    config MOD_ADAPTOR_M5311
+        bool "CMIOT M5311"
+endchoice

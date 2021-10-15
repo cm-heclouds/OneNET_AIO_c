@@ -1,0 +1,1 @@
+obj-y += er-coap-13/er-coap-13.o

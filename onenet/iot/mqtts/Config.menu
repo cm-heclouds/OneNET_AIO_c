@@ -1,0 +1,4 @@
+config IOT_MQTTS_TLS
+    bool "Enable TLS"
+    default y
+    select NETWORK_TLS

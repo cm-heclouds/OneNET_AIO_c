@@ -1,0 +1,11 @@
+menu "Services"
+    config GENERAL_OTA
+        bool "General-OTA by http"
+        default n
+        select ACCESS_TOKEN
+        select CJSON
+        select HTTP
+    if GENERAL_OTA
+        source "services/ota/Config.menu"
+    endif
+endmenu

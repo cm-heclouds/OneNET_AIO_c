@@ -1,0 +1,14 @@
+choice
+    prompt "Ringa Region"
+    default RINGA_REGION_MAINLAND
+    config RINGA_REGION_MAINLAND
+        bool "China's Mainland"
+    config RINGA_REGION_HK
+        bool "Hong Kong"
+    config RINGA_REGION_GLB
+        bool "Global Foreign"
+endchoice
+config RINGA_TLS
+    bool "Enable TLS"
+    default y
+    select NETWORK_TLS
